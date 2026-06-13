@@ -16,10 +16,10 @@ release:
     adb devices -l
     ./gradlew assembleRelease
     rm -f {{release_signed_apk}}
-    SDK_DIR="$$(sed -n 's/^sdk.dir=//p' local.properties)"
-    BUILD_TOOLS_DIR="$$(find "$$SDK_DIR/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
-    "$$BUILD_TOOLS_DIR/apksigner" sign \
-      --ks "$$HOME/.android/debug.keystore" \
+    SDK_DIR="$(sed -n 's/^sdk.dir=//p' local.properties)"; \
+    BUILD_TOOLS_DIR="$(find "$SDK_DIR/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"; \
+    "${BUILD_TOOLS_DIR}/apksigner" sign \
+      --ks "$HOME/.android/debug.keystore" \
       --ks-key-alias androiddebugkey \
       --ks-pass pass:android \
       --key-pass pass:android \
